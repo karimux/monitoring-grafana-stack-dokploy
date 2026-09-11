@@ -1,5 +1,3 @@
-version: "3.8"
-
 # NOTE Dokploy :
 # - Ne PAS mapper de "ports:" ici -> Dokploy route le trafic via son réseau interne
 #   "dokploy-network" + Traefik, configuré depuis l'onglet "Domains" de l'UI.
