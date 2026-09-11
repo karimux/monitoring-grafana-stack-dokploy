@@ -56,7 +56,7 @@ services:
     container_name: alertmanager
     restart: unless-stopped
     volumes:
-      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
       - alertmanager_data:/alertmanager
     networks:
       - monitoring
