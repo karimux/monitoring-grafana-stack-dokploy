@@ -109,7 +109,7 @@ services:
       - GF_LOG_LEVEL=info
     volumes:
       - grafana_data:/var/lib/grafana
-      - rules:
+      - rules:/var/lib/grafana/rules
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
     networks:
       - monitoring
