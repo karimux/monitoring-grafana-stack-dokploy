@@ -1,0 +1,47 @@
+groups:
+  - name: infra-basics
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Cible {{ $labels.instance }} injoignable"
+          description: "{{ $labels.job }}/{{ $labels.instance }} ne répond plus depuis 2 min."
+
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU élevé sur {{ $labels.instance }}"
+          description: "Utilisation CPU > 85% depuis 10 minutes."
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 90
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Mémoire critique sur {{ $labels.instance }}"
+          description: "Utilisation mémoire > 90% depuis 10 minutes."
+
+      - alert: DiskSpaceLow
+        expr: (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"}) * 100 < 10
+        for: 15m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Espace disque faible sur {{ $labels.instance }}"
+          description: "Moins de 10% d'espace libre sur {{ $labels.mountpoint }}."
+
+      - alert: PrometheusTSDBRetentionApproaching
+        expr: prometheus_tsdb_storage_blocks_bytes / (10 * 1024 * 1024 * 1024) > 0.9
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Prometheus approche de la limite de rétention en taille"
+          description: "Le TSDB dépasse 90% de la limite storage.tsdb.retention.size (10GB)."

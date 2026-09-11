@@ -1,0 +1,17 @@
+# A copier sur l'HÔTE (pas dans un conteneur) dans /etc/logrotate.d/docker-containers
+# Le driver "json-file" de Docker ne fait que de la rotation par TAILLE
+# (voir max-size/max-file dans docker-compose.yml). Pour une vraie rotation
+# HEBDOMADAIRE en plus de ça, on complète avec logrotate au niveau système.
+
+/var/lib/docker/containers/*/*.log {
+    weekly
+    rotate 4
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+    size 50M
+    dateext
+    dateformat -%Y%m%d
+}

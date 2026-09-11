@@ -1,0 +1,27 @@
+route:
+  receiver: "default"
+  group_by: ["alertname", "instance"]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+
+receivers:
+  - name: "default"
+    # Exemple Slack (décommente et configure un webhook Slack) :
+    # slack_configs:
+    #   - api_url: "${SLACK_WEBHOOK_URL}"
+    #     channel: "#alerts"
+    #     send_resolved: true
+
+    # Exemple email (nécessite un relais SMTP) :
+    # email_configs:
+    #   - to: "ops@tondomaine.com"
+    #     from: "alertmanager@tondomaine.com"
+    #     smarthost: "smtp.tondomaine.com:587"
+    #     auth_username: "alertmanager@tondomaine.com"
+    #     auth_password: "${SMTP_PASSWORD}"
+
+inhibit_rules:
+  - source_matchers: ["severity=critical"]
+    target_matchers: ["severity=warning"]
+    equal: ["alertname", "instance"]
