@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
     user: "65534:65534" # nobody -> lecture seule, bonne pratique sécu
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:rw
       - rules:/etc/prometheus/rules:ro
       - prometheus_data:/prometheus
     command:
