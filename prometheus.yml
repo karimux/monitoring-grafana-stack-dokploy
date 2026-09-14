@@ -25,10 +25,6 @@ scrape_configs:
   - job_name: "srv-1-app-prod"
     static_configs:
       - targets: ["212.47.75.9:9100"]
-        labels:
-          server: "srv-1-app-prod"
-          environment: "production"
-          role: "app"
 
   - job_name: "cadvisor"
     static_configs:
