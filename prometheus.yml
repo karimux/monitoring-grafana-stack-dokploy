@@ -28,7 +28,7 @@ scrape_configs:
 
   - job_name: "cadvisor"
     static_configs:
-      - targets: ["cadvisor:8080"]
+      - targets: ["212.47.75.9:9340"]
 
   # Ajoute ici tes propres apps déployées via Dokploy, tant qu'elles sont
   # sur le même réseau "monitoring" (ou "dokploy-network" si tu les rattaches).
