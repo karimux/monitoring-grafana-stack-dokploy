@@ -17,9 +17,20 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-  - job_name: "node-exporter"
+  - job_name: "linux_servers"
+    scrape_interval: 15s
     static_configs:
       - targets: ["node-exporter:9100"]
+        labels:
+          server: "srv-3-monitoring-backup"
+          environment: "production"
+          role: "monitoring"
+
+      - targets: ["212.47.75.9:9100"]
+        labels:
+          server: "srv-1-app-prod"
+          environment: "production"
+          role: "app"
 
   - job_name: "cadvisor"
     static_configs:
